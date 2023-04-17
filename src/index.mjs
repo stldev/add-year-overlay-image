@@ -8,11 +8,16 @@ import {
 } from "node:fs";
 import puppeteer from "puppeteer";
 
+const person = process.env.PERSON || "unknown";
 const port = 8081;
-const srcMediaDir = "./wwwroot/srcMedia";
-const destMediaDir = "./newMedia";
+const srcMediaDir = `./wwwroot/${person}SrcMedia`;
+const destMediaDir = `./${person}NewMedia`;
 
 async function start() {
+  console.log("-----d--d-d-d-d-d-d-d-d");
+  console.log(srcMediaDir);
+  console.log(destMediaDir);
+
   console.time("DO_IT");
 
   if (existsSync(destMediaDir)) rmdirSync(destMediaDir, { recursive: true });
@@ -52,7 +57,7 @@ async function start() {
     const page = await browser.newPage();
     await page.setViewport({ width: 333, height: 333 });
     await page.goto(
-      `http://localhost:${port}?fileName=${file.name}&year=${file.year}`
+      `http://localhost:${port}?fileName=${file.name}&year=${file.year}&person=${person}`
     );
     await new Promise((resolve) => setTimeout(resolve, 99));
     await page.screenshot({
