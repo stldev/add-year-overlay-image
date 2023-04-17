@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>doIt!</title>
+    <style>
+      html,
+      body,
+      * {
+        padding: 0;
+        margin: 0;
+      }
+
+      img {
+        /* need this to get rid of weird, small extra margin at bottom */
+        float: left;
+      }
+
+      .photo-year {
+        font-family: Arial, sans-serif;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: #000;
+        color: #fff;
+        padding: 0.2em;
+        font-size: 115px;
+        margin-left: 300%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="h1PhotoYear" class="photo-year">????</h1>
+    <script>
+      const search = new URLSearchParams(window.location.search);
+      const year = search.get("year");
+      const fileName = search.get("fileName");
+
+      const img = new Image();
+
+      img.onload = () => {
+        let imgWidth = img.naturalWidth;
+        let imgHeight = img.naturalHeight;
+
+        // do we need ?
+        // if (imgWidth > 2000 || imgHeight > 2000) {
+        //   imgWidth = Math.round(imgWidth / 2);
+        //   imgHeight = Math.round(imgHeight / 2);
+        // }
+
+        if (imgWidth < 1500) {
+          document.getElementById("h1PhotoYear").style.marginLeft = "75%";
+          document.getElementById("h1PhotoYear").style.fontSize = "75px";
+        }
+
+        img.width = imgWidth;
+        img.height = imgHeight;
+
+        setTimeout(() => {
+          document.body.appendChild(img);
+          document.getElementById("h1PhotoYear").textContent = year;
+        }, 25);
+      };
+      img.src = `srcMedia/${fileName}`;
+    </script>
+  </body>
+</html>

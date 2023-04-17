@@ -1,0 +1,18 @@
+{
+  "name": "year-on-image-overlay",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.mjs",
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "start": "http-server wwwroot -c-1 --silent -p 8081",
+    "show-year": "start-server-and-test 8081 'node ./src/index.mjs'",
+    "start2": "npx http-server wwwroot && node ./src/index.mjs"
+  },
+  "dependencies": {
+    "http-server": "^14.1.1",
+    "puppeteer": "^19.9.0",
+    "start-server-and-test": "^2.0.0"
+  }
+}
