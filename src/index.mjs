@@ -9,10 +9,11 @@ import {
 import puppeteer from "puppeteer";
 
 const persons = ["rbb", "blb", "alex"];
+// const persons = ["alex"];
 const port = 8081;
 
 async function start() {
-  // console.time("DO_IT");
+  console.time("DO_IT");
 
   for await (const person of persons) {
     const srcMediaDir = `./wwwroot/${person}SrcMedia`;
@@ -67,7 +68,7 @@ async function start() {
     }
   }
 
-  // console.timeEnd("DO_IT");
+  console.timeEnd("DO_IT");
 }
 
 start();
