@@ -6,8 +6,8 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "start": "http-server wwwroot -c-1 --silent -p 8081",
-    "show-year": "start-server-and-test 8081 'node ./src/index.mjs'",
+    "start": "http-server wwwroot -c-1 --silent -p 8083",
+    "show-year": "start-server-and-test 8083 'node ./src/index.mjs'",
     "start2": "npx http-server wwwroot && node ./src/index.mjs"
   },
   "dependencies": {
