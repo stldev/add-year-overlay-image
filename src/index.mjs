@@ -5,11 +5,15 @@ import {
   readdirSync,
   statSync,
   copyFileSync,
+  cpSync,
 } from "node:fs";
+import { normalize } from "path";
 import puppeteer from "puppeteer";
+import { persons, dayFoldersRoot } from "../config.mjs";
 
-const persons = ["rbb", "blb", "alex"];
-// const persons = ["alex"];
+const nineDays = 777_600_000;
+const timeNow = Date.now();
+const folderDayName = new Date().toISOString().split("T")[0];
 const port = 8083;
 
 async function start() {
@@ -18,6 +22,17 @@ async function start() {
   for await (const person of persons) {
     const srcMediaDir = `./wwwroot/${person}SrcMedia`;
     const destMediaDir = `./${person}NewMedia`;
+
+    const pathToPerson = normalize(`${dayFoldersRoot}/${person}`);
+    const dayFolders = readdirSync(pathToPerson);
+
+    dayFolders.forEach((dayFolder) => {
+      const folderDate = new Date(`${dayFolder}T12:00:00.000Z`).getTime();
+      const timeDiff = timeNow - folderDate;
+      if (timeDiff > nineDays) {
+        rmdirSync(`${pathToPerson}/${dayFolder}`, { recursive: true });
+      }
+    });
 
     if (existsSync(destMediaDir)) rmdirSync(destMediaDir, { recursive: true });
     mkdirSync(destMediaDir);
@@ -66,6 +81,15 @@ async function start() {
       });
       await browser.close();
     }
+
+    // move to dest folder
+    if (!existsSync(`${pathToPerson}/${folderDayName}`)) {
+      mkdirSync(`${pathToPerson}/${folderDayName}`);
+    }
+
+    cpSync(destMediaDir, `${pathToPerson}/${folderDayName}`, {
+      recursive: true,
+    });
   }
 
   console.timeEnd("DO_IT");
