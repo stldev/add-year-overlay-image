@@ -110,3 +110,5 @@ alexNewMedia/
 src/wwwroot/rbbSrcMedia/
 src/wwwroot/blbSrcMedia/
 src/wwwroot/alexSrcMedia/
+
+config.mjs
