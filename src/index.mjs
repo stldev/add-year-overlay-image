@@ -9,9 +9,8 @@ import {
 } from "node:fs";
 import { normalize } from "path";
 import puppeteer from "puppeteer";
-import { persons, dayFoldersRoot } from "../config.mjs";
+import { persons, dayFoldersRoot, maxDaysToKeep } from "../config.mjs";
 
-const nineDays = 777_600_000;
 const timeNow = Date.now();
 const folderDayName = new Date().toISOString().split("T")[0];
 const port = 8083;
@@ -29,7 +28,7 @@ async function start() {
     dayFolders.forEach((dayFolder) => {
       const folderDate = new Date(`${dayFolder}T12:00:00.000Z`).getTime();
       const timeDiff = timeNow - folderDate;
-      if (timeDiff > nineDays) {
+      if (timeDiff > maxDaysToKeep) {
         rmdirSync(`${pathToPerson}/${dayFolder}`, { recursive: true });
       }
     });
